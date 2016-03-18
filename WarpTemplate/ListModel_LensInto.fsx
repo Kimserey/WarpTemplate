@@ -37,9 +37,11 @@ module Model =
             let text txt =
                 spanAttr [ attr.style "margin-left: 2em;" ] [ text txt ]
 
-            div [ text ("number: " +  string page.Number); br []
+            div [ textDash; br []
+                  text ("number: " +  string page.Number); br []
                   text ("content: " + page.Content) ]
 
+    // TODO : refactore to ListModel?
     type ReactiveBook = {
         Title: Var<string>
         Pages: Var<ReactivePage list>
@@ -64,16 +66,62 @@ module Model =
             <*> page.Content.View           
 
 [<JavaScript>]
+module Builder =
+    open Model
+
+    type ReactivePage with
+        static member RenderBuilder (rv: ReactivePage) =
+            divAttr [ attr.``class`` "well" ]
+                    [ divAttr [ attr.``class`` "form-group" ]
+                              [ label [ text "Number" ]
+                                Doc.IntInputUnchecked [ attr.``class`` "form-control" ] rv.Number ]
+                      
+                      divAttr [ attr.``class`` "form-group" ]
+                              [ label [ text "Content" ]
+                                Doc.Input [ attr.``class`` "form-control" ] rv.Content ] ] :> Doc
+    
+    type ReactiveBook with
+        static member RenderBuilder (rv: ReactiveBook) =
+            divAttr [ attr.``class`` "well" ]
+                    [ divAttr [ attr.``class`` "form-group" ]
+                              [ label [ text "Title" ]
+                                Doc.Input [ attr.``class`` "form-control" ] rv.Title ]
+                    
+                      divAttr [ attr.``class`` "form-group" ] 
+                              [ label [ text "Elements" ]
+                                Doc.Button "-" [ attr.``class`` "btn btn-default" ] (fun () -> if rv.Pages.Value.Length >= 0 then Var.Set rv.Pages (rv.Pages.Value |> List.take (rv.Pages.Value.Length - 1)))
+                                Doc.Button "+" [ attr.``class`` "btn btn-default" ] (fun () -> Var.Set rv.Pages (rv.Pages.Value @ [ { Number = Var.Create 0; Content = Var.Create "" } ])) 
+                                
+                                // TODO : refactore here
+                                rv.Pages.View
+                                |> Doc.BindView (List.map ReactivePage.RenderBuilder >> Doc.Concat) ] ]
+
+[<JavaScript>]
 module Client =
     open Model
+    open Builder
 
     let main() =
         let rvBook = { Title = Var.Create "New book"; Pages = Var.Create [ { Number = Var.Create 0; Content = Var.Create "A new page." } ] }
         
-        div [ rvBook
-              |> ReactiveBook.View
-              |> View.Map Book.Render
-              |> Doc.EmbedView ]
+        let container content =
+            divAttr [ attr.style "position:fixed; height: 85%; width: 48%; top: 10%; overflow-y: scroll;"
+                      attr.``class`` "well" ]
+                    [ content ]
+
+        divAttr [ attr.``class`` "container-fluid" ]
+                [ h1Attr [ attr.``class`` "text-center" ] 
+                         [ text "Book - Live preview" ]
+                  divAttr [ attr.``class`` "row" ]
+                          [ divAttr [ attr.``class`` "col-xs-6" ]
+                                    [ rvBook
+                                      |> ReactiveBook.RenderBuilder 
+                                      |> container ]
+                            divAttr [ attr.``class`` "col-xs-6" ]
+                                    [ rvBook
+                                      |> ReactiveBook.View
+                                      |> Doc.BindView Book.Render
+                                      |> container ] ] ]
 
 module Server =
 

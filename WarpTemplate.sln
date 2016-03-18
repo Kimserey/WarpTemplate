@@ -5,6 +5,12 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WarpTemplate", "WarpTemplate\WarpTemplate.fsproj", "{EA0CBA96-D3C8-4484-81AB-EE8C8B7FB924}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{B2E46CD3-E701-48E4-9272-90D8CEDA1D63}"
+	ProjectSection(SolutionItems) = preProject
+		build.cmd = build.cmd
+		restore.cmd = restore.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
