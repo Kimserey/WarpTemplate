@@ -46,6 +46,8 @@
     <Compile Include="AssemblyInfo.fs" />
     <None Include="ListModel_Sample.fsx" />
     <None Include="ListModel_LensInto.fsx" />
+    <None Include="Simple_Sitelet.fsx" />
+    <None Include="index.html" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
