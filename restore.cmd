@@ -10,3 +10,5 @@ tools\paket.exe restore
 if errorlevel 1 (
   exit /b %errorlevel%
 )
+
+copy /Y .\tools\reference-nover.fsx .\packages\WebSharper.Warp\tools\
