@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WarpTemplate", "SequenceIssue\WarpTemplate.fsproj", "{EA0CBA96-D3C8-4484-81AB-EE8C8B7FB924}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WarpTemplate", "WarpTemplate\WarpTemplate.fsproj", "{EA0CBA96-D3C8-4484-81AB-EE8C8B7FB924}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
