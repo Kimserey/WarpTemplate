@@ -18,7 +18,7 @@ module Client =
 
         let modify n n' =
             let x = rv.LensInto id (fun _ a -> a) n
-            x.Update (fun _ -> n')
+            x.Set n'
 
         let key = Var.Create 0
         let replace = Var.Create 0
