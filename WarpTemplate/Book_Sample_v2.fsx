@@ -8,6 +8,11 @@ open WebSharper.UI.Next
 open WebSharper.UI.Next.Html
 open WebSharper.UI.Next.Client
 
+(*
+    Starting to refactor all the Var into View
+       
+*)
+
 [<JavaScript; AutoOpen>]
 module Utils =
     let (<*>) f x = View.Apply f x
@@ -41,7 +46,6 @@ module Model =
                   text ("number: " +  string page.Number); br []
                   text ("content: " + page.Content) ]
 
-    // TODO : refactore to ListModel?
     type ReactiveBook = {
         Title: Var<string>
         Pages: Var<ReactivePage list>
@@ -92,7 +96,6 @@ module Builder =
                                 Doc.Button "-" [ attr.``class`` "btn btn-default" ] (fun () -> if rv.Pages.Value.Length >= 0 then Var.Set rv.Pages (rv.Pages.Value |> List.take (rv.Pages.Value.Length - 1)))
                                 Doc.Button "+" [ attr.``class`` "btn btn-default" ] (fun () -> Var.Set rv.Pages (rv.Pages.Value @ [ { Number = Var.Create 0; Content = Var.Create "" } ])) 
                                 
-                                // TODO : refactore here
                                 rv.Pages.View
                                 |> Doc.BindView (List.map ReactivePage.RenderBuilder >> Doc.Concat) ] ]
 
