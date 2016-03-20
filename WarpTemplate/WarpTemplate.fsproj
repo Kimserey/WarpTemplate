@@ -46,9 +46,7 @@
     <Compile Include="AssemblyInfo.fs" />
     <None Include="Simple_Sitelet.fsx" />
     <None Include="ListModel_Sample.fsx" />
-    <None Include="Book_Sample_v2.fsx" />
     <None Include="index.html" />
-    <None Include="Book_Sample_v1.fsx" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
